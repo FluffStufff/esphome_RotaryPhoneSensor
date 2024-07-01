@@ -1,0 +1,60 @@
+alias: Rotary Phone Numbers
+description: ""
+trigger:
+  - platform: state
+    entity_id:
+      - sensor.phone_rotary_dial
+condition: []
+action:
+  - if:
+      - condition: state
+        entity_id: sensor.phone_rotary_dial
+        state: "1"
+    then: []
+  - if:
+      - condition: state
+        entity_id: sensor.phone_rotary_dial
+        state: "2"
+    then: []
+  - if:
+      - condition: state
+        entity_id: sensor.phone_rotary_dial
+        state: "3"
+    then: []
+  - if:
+      - condition: state
+        entity_id: sensor.phone_rotary_dial
+        state: "4"
+    then: []
+  - if:
+      - condition: state
+        entity_id: sensor.phone_rotary_dial
+        state: "5"
+    then: []
+  - if:
+      - condition: state
+        entity_id: sensor.phone_rotary_dial
+        state: "6"
+    then: []
+  - if:
+      - condition: state
+        entity_id: sensor.phone_rotary_dial
+        state: "7"
+   then: []
+  - if:
+      - condition: state
+        entity_id: sensor.phone_rotary_dial
+        state: "8"
+    then: []
+  - if:
+      - condition: state
+        entity_id: sensor.phone_rotary_dial
+        state: "9"
+    then: []
+  - if:
+      - condition: state
+        entity_id: sensor.phone_rotary_dial
+        state: "10"
+    then: []
+mode: parallel
+max: 10
