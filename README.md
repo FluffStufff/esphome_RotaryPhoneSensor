@@ -21,7 +21,7 @@ Include the custom_component in your ESPHome YAML usinig:
 ```
 esphome:
   includes:
-  - custom_components/rotary_phone_sensor.h 
+  - custom_components/RotaryPhoneSensor.h 
 ```
 
 And then add the sensor using:
