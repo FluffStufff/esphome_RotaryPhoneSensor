@@ -17,7 +17,7 @@ void IRAM_ATTR HOT PhoneStore::control_gpio_intr(PhoneStore *store) {
 
 void IRAM_ATTR HOT PhoneStore::rotary_gpio_intr(PhoneStore *store) {
   if (store->control.digital_read()) {
-    store->count = 0;
+    //store->count = 0;
   } else {
     store->publish = true;
   }
