@@ -40,7 +40,7 @@ action:
       - condition: state
         entity_id: sensor.phone_rotary_dial
         state: "7"
-   then: []
+    then: []
   - if:
       - condition: state
         entity_id: sensor.phone_rotary_dial
