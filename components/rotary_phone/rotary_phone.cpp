@@ -41,6 +41,11 @@ void RotaryPhone::loop() {
   }
   if (!this->store_.publish)
     return;
+  this->store_.publish = false;
+  if (count == 0) {
+    ESP_LOGW(TAG, "dialed with no count");
+    return;
+  }
   if (count == 10)
     count = 0;
   this->send_key_('0' + count);

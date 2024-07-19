@@ -13,7 +13,7 @@ struct PhoneStore {
   uint32_t debounce_time;
   uint32_t reset_time;
   uint32_t last_pulse_time{0};
-  volatile bool publish{true};
+  volatile bool publish{false};
   volatile uint8_t count{0};
 
   static void control_gpio_intr(PhoneStore *arg);
