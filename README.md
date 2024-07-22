@@ -38,7 +38,8 @@ rotary_phone:
       number: GPIO25
 ```
 
-you can then add a key_collector to allow the phone to dial any length of numbers you like
+you can then add a key_collector to allow the phone to dial any length of numbers you like, the example below uses length 3 but the timeout allows for single or double didgits to also be dialled.
+Alternatively you can use 'end_key_required' to define a certain number as the end of your sequence, 0 for example.
 
 ```
   - id: pincode_reader
