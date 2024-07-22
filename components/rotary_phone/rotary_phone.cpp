@@ -8,19 +8,19 @@ namespace rotary_phone {
 static const char *const TAG = "rotary_phone";
 
 void IRAM_ATTR HOT PhoneStore::control_gpio_intr(PhoneStore *store) {
+    if (store->control.digital_read()) {
+    //store->count = 0;
+  } else {
+    store->publish = true;
+  }
+}
+
+void IRAM_ATTR HOT PhoneStore::rotary_gpio_intr(PhoneStore *store) {
   uint32_t now = millis();
   if (now - store->last_pulse_time < store->debounce_time)
     return;
   store->count++;
   store->last_pulse_time = now;
-}
-
-void IRAM_ATTR HOT PhoneStore::rotary_gpio_intr(PhoneStore *store) {
-  if (store->control.digital_read()) {
-    //store->count = 0;
-  } else {
-    store->publish = true;
-  }
 }
 
 void RotaryPhone::setup() {
@@ -29,8 +29,8 @@ void RotaryPhone::setup() {
   this->rotary_pin_->setup();
   this->store_.rotary = this->rotary_pin_->to_isr();
     
-  this->control_pin_->attach_interrupt(PhoneStore::control_gpio_intr, &this->store_, gpio::INTERRUPT_RISING_EDGE);
-  this->rotary_pin_->attach_interrupt(PhoneStore::rotary_gpio_intr, &this->store_, gpio::INTERRUPT_ANY_EDGE);
+  this->control_pin_->attach_interrupt(PhoneStore::control_gpio_intr, &this->store_, gpio::INTERRUPT_ANY_EDGE);
+  this->rotary_pin_->attach_interrupt(PhoneStore::rotary_gpio_intr, &this->store_, gpio::INTERRUPT_RISING_EDGE);
 }
 
 void RotaryPhone::loop() {
