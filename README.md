@@ -16,29 +16,55 @@ Here is a rough picture of what I ended up with, my ESP had issues pulling down 
 
 
 ## Software Setup
-Include the custom_component in your ESPHome YAML usinig:
+Include the external_components in your ESPHome YAML usinig:
 
 ```
-esphome:
-  includes:
-  - custom_components/RotaryPhoneSensor.h 
+external_components:
+  - source:
+      type: git
+      url: https://github.com/FluffStufff/esphome_RotaryPhoneSensor
+      ref: comp
+    components: [ rotary_phone ]
 ```
 
 And then add the sensor using:
 
 ```
-sensor:
-  - platform: custom
-    lambda: |-
-      auto rotary_phone_sensor = new RotaryPhoneSensor();
-      App.register_component(rotary_phone_sensor);
-      return {rotary_phone_sensor};
-
-    sensors:
-      name: "Rotary Dial"
+rotary_phone:
+  - id: phone
+    control_pin: 
+      number: GPIO26
+    rotary_pin: 
+      number: GPIO25
 ```
 
-You should now see the Rotary Dial appear under 'sensors' in your ESP Device
+you can then add a key_collector to allow the phone to dial any length of numbers you like
+
+```
+  - id: pincode_reader
+    source_id: phone
+    min_length: 1
+    max_length: 3
+    end_key_required: false
+    allowed_keys: "0123456789"
+    timeout: 4s
+    on_result:
+      - text_sensor.template.publish:
+          id: keypad
+          state: !lambda "return x.c_str();"
+    on_timeout:
+      - text_sensor.template.publish:
+          id: keypad
+          state: !lambda "return x.c_str();"
+
+text_sensor:
+  - platform: template
+    name: "Dialled Code"
+    id: keypad
+
+```
+
+You should now see the Dialled Code appear under 'sensors' in your ESP Device
 
 ![image](https://github.com/FluffStufff/esphome_RotaryPhoneSensor/assets/167688338/25b1e80e-696c-4259-bf06-d5cb0e348149)
 
